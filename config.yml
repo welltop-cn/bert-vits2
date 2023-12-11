@@ -3,7 +3,7 @@ bert_gen:
   device: cuda
   num_processes: 4
   use_multi_device: false
-dataset_path: "Data/poki"
+dataset_path: "Data/wotou"
 mirror: 'openi'
 openi_token: 'eb9b666e42ced4d4bc4515fb8390eaf3b77ad0f1'
 preprocess_text:
@@ -15,23 +15,23 @@ preprocess_text:
   transcription_path: filelists/short_character_anno.list
   val_path: filelists/val.list
   val_per_spk: 4
-resample: 
+resample:
   in_dir: audios/raw
   out_dir: audios/wavs
   sampling_rate: 44100
 server:
   device: cuda
   models:
-  - config: ./Data/poki/config.json
+  - config: ./Data/wotou/config.json
     device: cuda
     language: EN
-    model: ./Data/poki/models/G_30000.pth
+    model: ./Data/wotou/models/G_1000.pth
     speakers:
     - length_scale: 1.2
       noise_scale: 0.6
       noise_scale_w: 0.8
       sdp_ratio: 1.0
-      speaker: "poki"
+      speaker: "wotou"
   port: 28000 
 train_ms:
   base:
@@ -41,7 +41,7 @@ train_ms:
   config_path: config.json
   env:
     MASTER_ADDR: localhost
-    MASTER_PORT: 28000
+    MASTER_PORT: 7878 
     RANK: 0
     THE_ENV_VAR_YOU_NEED_TO_USE: '1234567'
     WORLD_SIZE: 1
@@ -50,7 +50,7 @@ translate:
   app_key: ''
   secret_key: ''
 webui:
-  config_path: Data/ying/config.json
+  config_path: Data/wotou/config.json
   debug: false
   device: cuda
   language_identification_library: langid

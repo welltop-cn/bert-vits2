@@ -1,11 +1,11 @@
 bert_gen:
   config_path: config.json
   device: cuda
-  num_processes: 2
+  num_processes: 4
   use_multi_device: false
-dataset_path: Data\A
-mirror: ''
-openi_token: ''
+dataset_path: "Data/SPEAKER"
+mirror: 'openi'
+openi_token: 'eb9b666e42ced4d4bc4515fb8390eaf3b77ad0f1'
 preprocess_text:
   clean: true
   cleaned_path: filelists/cleaned.list
@@ -15,48 +15,33 @@ preprocess_text:
   transcription_path: filelists/short_character_anno.list
   val_path: filelists/val.list
   val_per_spk: 4
-resample:
-  in_dir: custom_character_voice
-  out_dir: custom_character_voice
+resample: 
+  in_dir: audios/raw
+  out_dir: audios/wavs
   sampling_rate: 44100
 server:
   device: cuda
   models:
-  - config: ./Data/ying/config.json
+  - config: ./Data/SPEAKER/config.json
     device: cuda
-    language: ZH
-    model: ./Data/ying/models/G_4600.pth
+    language: EN
+    model: ./Data/SPEAKER/models/G_1000.pth
     speakers:
-    - length_scale: 1
-      noise_scale: 0.6
-      noise_scale_w: 0.8
-      sdp_ratio: 0.2
-      speaker: "\u79D1\u6BD4"
-    - length_scale: 0.5
-      noise_scale: 0.7
-      noise_scale_w: 0.8
-      sdp_ratio: 0.3
-      speaker: "\u4E94\u6761\u609F"
     - length_scale: 1.2
       noise_scale: 0.6
       noise_scale_w: 0.8
-      sdp_ratio: 0.2
-      speaker: "\u5B89\u500D\u664B\u4E09"
-  - config: ./Data/ying/config.json
-    device: cuda
-    language: JP
-    model: ./Data/ying/models/G_4600.pth
-    speakers: []
-  port: 7860
+      sdp_ratio: 1.0
+      speaker: "SPEAKER"
+  port: 28000 
 train_ms:
   base:
-    model_image: "Bert-VITS2\u4E2D\u65E5\u5E95\u6A21"
+    model_image: "Bert-VITS2中日英底模-fix"
     repo_id: Stardust_minus/Bert-VITS2
-    use_base_model: false
+    use_base_model: true
   config_path: config.json
   env:
     MASTER_ADDR: localhost
-    MASTER_PORT: 10086
+    MASTER_PORT: 7878
     RANK: 0
     THE_ENV_VAR_YOU_NEED_TO_USE: '1234567'
     WORLD_SIZE: 1
@@ -65,10 +50,10 @@ translate:
   app_key: ''
   secret_key: ''
 webui:
-  config_path: Data/ying/config.json
+  config_path: Data/SPEAKER/config.json
   debug: false
   device: cuda
   language_identification_library: langid
   model: models/G_4600.pth
-  port: 7860
+  port: 28000
   share: false
